@@ -1,0 +1,119 @@
+﻿@using GoogleC29CrudApp.App_Start
+@using GoogleC29CrudApp.Models
+
+@{ 
+    LayoutViewModel LayoutModel = (LayoutViewModel)ViewBag.LayoutViewModel;
+}
+
+<!DOCTYPE html>
+<html lang="en-US">
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
+    <title>Local Shows</title>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <link href="https://fonts.googleapis.com/css?family=Quicksand|Work+Sans" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto+Condensed" rel="stylesheet">
+    <link href="~/Content/font-awesome.min.css" rel="stylesheet" />
+    <link href="~/Content/layout.css" rel="stylesheet"/>
+</head>
+
+<body ng-controller="mainController as main" data-ng-app="LocalShows">
+   
+    <!-- Header -->
+    <header>
+        <!--Nav Bar-->
+        <nav class="navbar navbar-fixed-top all-caps">
+            <div class="container">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a class="navbar-brand" href="#">Local Shows</a>
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="" class="nav-item">Upcoming Shows</a></li>
+                        <li><a href="" class="nav-item">Recently Posted</a></li>
+                        <li class="nav-item"><a href="./">Post New<span class="sr-only">(current)</span></a></li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+        <!--End Nav Bar-->
+    </header>
+    <!-- End Header -->
+    
+
+    @RenderBody()
+
+    <!-- Footer -->
+    <footer>
+        
+    </footer>
+    <!-- End Footer -->
+
+    
+    <!-- Js -->
+
+   
+    @*Angular Sctipt*@
+    <script src="~/Scripts/angular.min.js"></script>
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <!-- End Js -->
+
+    <script>
+        var APPNAME = "LocalShows";
+        var LocalShows = {
+            extraModules: []
+        };
+
+    </script>
+    @RenderSection("pageInitScripts", false)
+    @*// TestApp2.extraModules.push("ui.bootstrap");*@
+
+    <script>
+        // Bootstrap Angular (NOT css)
+        (function () {
+            angular.module(APPNAME, LocalShows.extraModules)
+        })();
+
+
+        LocalShows.config = @Html.RawJson((Object)Model);
+        LocalShows.layoutConfig = @Html.RawJson(LayoutModel);
+
+        (function() {
+            "use strict";
+            if (typeof(angular) !== 'undefined') {
+                angular.module(APPNAME).constant("appConfig", LocalShows.config);
+                angular.module(APPNAME).constant("layoutConfig", LocalShows.layoutConfig);
+            }
+        })();
+
+    </script>
+
+    @RenderSection("Scripts", false)
+
+</body>
+</html>

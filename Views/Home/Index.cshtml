@@ -1,0 +1,231 @@
+﻿
+@{
+    ViewBag.Title = "ThemeExample";
+    Layout = "~/Views/Shared/_LayoutThemed.cshtml";
+}
+
+
+
+<link href="~/Content/Index.css" rel="stylesheet" />
+
+
+
+@*<h2>Local Shows</h2>*@
+<div class="">
+
+    <div class="title" style="text-align: center;">
+        <h1 class="all-caps">Upcoming Shows</h1>
+        <h3 class="text-b-red">Los Angeles</h3>
+    </div>
+
+    <!-- New Shows-->
+    @*<pre>{{main.newShowList | json}}</pre>*@
+    <div class="container shows-container">
+        <div class="row">
+            <ul class="list">
+                <li class="list-item grow center"
+                    ng-repeat="show in main.newShowList">
+                    <div class="list-content">
+                        <h2 class="">{{show.showName}}</h2>
+                        <span class="padding-bot">{{show.showDateTime}}</span>
+                        <img src="~/Content/Images/var3.jpg" alt="" />
+                        <p class="all-caps padding-top">{{show.venueName}}</p>
+                        <span ng-repeat="band in main.bandList">{{band.name}}</span>
+                        <div class="social-media-icons">
+                            @*<i class="fa fa-facebook" aria-hidden="true"></i>*@
+                        </div>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="list-content">
+                        <h2>Title</h2>
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit...
+                        </p>
+                        <div class="social-media-icons">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </li>
+                <li class="list-item">
+                    <div class="list-content">
+                        <h2>Title</h2>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit...</p>
+                        <div class="social-media-icons">
+                            <i class="fa fa-facebook" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!--End New Shows-->
+
+    <!-- Announcement Form-->
+    <div class="container announcement-container">
+        <div class="row">
+            <div class="span12">
+                <div class="title-page">
+                    <h2 class="title">Post your show</h2>
+                    <h3 class="title-description padding-bot">Announce your upcoming shows!</h3>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="span12 band-list">
+                <p class="band"
+                   ng-repeat="band in main.bandList">
+                    {{band.name}}<span class="band-item">&times;</span>
+                </p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-3"></div>
+            <div class="col-md-6">
+                <form name="newShowForm">
+                    <div class="form-group input-group">
+                        <input type="text" 
+                               class="form-control"
+                               placeholder="Band"
+                               ng-model="main.bands"
+                               ng-keyup="$event.keyCode == 13 && main.addBandToList()">
+                        <span class="input-group-addon btn"
+                              ng-click="main.addBandToList()">Add</span>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control" 
+                               placeholder="Event Name"
+                               ng-model="main.newShow.showName">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control" 
+                               placeholder="Venue"
+                               ng-model="main.newShow.venueName">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control"
+                               placeholder="Date / Time"
+                               ng-model="main.newShow.showDateTime">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control"
+                               placeholder="$"
+                               ng-model="main.newShow.showCost">
+                    </div>
+                    <div class="form-group">
+                        <input type="text" 
+                               class="form-control" 
+                               placeholder="Flyer Url"
+                               ng-model="main.newShow.showFlyerUrl"
+                               ng-keyup="$event.keyCode == 13 && main.addNewShow(main.newShow)">
+                    </div>
+                    <div class="form-group">
+                        <button type="button" 
+                                class="btn pull-right"
+                                ng-click="main.addNewShow(main.newShow)">Post</button>
+                    </div>
+                </form>
+            </div>
+            <div class="col-md-3"></div>
+
+        </div>
+    </div>
+    <!--End Announcement Form-->
+</div>
+
+
+@section scripts {
+
+
+    <script>
+        (function () {
+            "use strict"
+
+            angular.module(APPNAME)
+                .controller("mainController", MainController);
+
+            MainController.$inject = ["$scope"];
+
+            function MainController($scope) {
+                var vm = this;
+
+                // stores the bands for each show
+                vm.bandList = [];
+                // stores instance of new show
+                vm.newShow = null;
+                // stores all new shows
+                vm.newShowList = [];
+
+
+                //function
+                vm.addBandToList = _addBandToList;
+                vm.addNewShow = _addNewShow;
+
+
+                initialize();
+
+                function initialize() {
+                }
+
+                function _addBandToList() {
+                    vm.bandList.push({ "name": vm.bands });
+                    vm.bands = "";
+                }
+
+                function _addNewShow(newShowInput) {
+                    newShowInput.bandNames = vm.bandList;
+                    vm.newShowList.push(newShowInput);
+                    vm.newShow = [];
+                }
+
+            };
+        })();
+
+        //APPNAME.factory("stateProvincesSerivce", ["$http", function ($http) {
+        //    return {
+        //        createShow: function () {
+        //            return $http.post("/api/shows").then(function (response) {
+        //                return response.data;
+        //            });
+        //        }
+        //    }
+        //}])
+
+
+
+         //this is how it would be done if we were not injecting the sabio.services.stateprovinces service class
+        //(function () {
+        //    angular.module(APPNAME)
+        //        .factory("stateProvincesSerivce", ["$http", function ($http) {
+        //            return {
+        //                getStates: function () {
+        //                    return $http.get("/api/states").then(function (response) {
+        //                        return response.data;
+        //                    });
+        //                }
+        //            }
+        //        }])
+        //    .controller("statesController", ["stateProvincesSerivce", "$scope", function (stateProvincesSerivce, $scope) {
+        //        stateProvincesSerivce.getStates().then(function (response) {
+        //            var vm = this;
+        //            //vm.states;
+        //            vm.states = response;
+        //            console.log(vm.states);
+        //            //$scope.name = response;
+        //            //console.log($scope.name)
+        //        });
+        //    }]);
+        //})();
+
+    </script>
+
+}
+
