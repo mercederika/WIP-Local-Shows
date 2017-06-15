@@ -1,7 +1,12 @@
 # LocalShows
 
-WIP
+Work In Progress.
 
-Web Application that allows upcoming artists to announce local events.
+#### A place where upcoming music artists get noticed
 
-<img src="http://i.imgur.com/rbP5fMA.jpg">
+Local Shows is a web app that allows upcoming artists to announce their events and get noticed - restaurants, museums, non-profits, record stores, etc..
+
+##### Using
+Html5, CSS3, Bootstrap 3, Javascript, AngularJS, .NET MVC 5, ADO.NET, C#, SQL 
+
+<img src="http://i.imgur.com/ZVI5fJ4.png">
