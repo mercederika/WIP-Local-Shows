@@ -8,4 +8,3 @@ Html5, CSS3, Bootstrap 3, Javascript, AngularJS, .NET MVC 5, ADO.NET, C#, SQL
 
 Work In Progress.
 
-<img src="http://i.imgur.com/ZVI5fJ4.png">
